@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class Target : MonoBehaviour
 {
     private Rigidbody targetRb;
+    private Controller gameController;
+    public ParticleSystem explosionParticle;
+    public int pointValue;
     // Variable impulsion
     private float minImpulse = 12;
     private float maxImpulse = 16;
@@ -20,6 +24,7 @@ public class Target : MonoBehaviour
         Invoke("DestroyTime", lifeSpan);
         //recupere le rigidbody
         targetRb = GetComponent<Rigidbody>();
+        gameController = GameObject.Find("GameController").GetComponent<Controller>();
         //Impulse
         targetRb.AddForce(RandomForce(), ForceMode.Impulse);
         //faire tourner l'objet sur lui meme
@@ -50,10 +55,17 @@ public class Target : MonoBehaviour
     private void OnMouseDown()
     {
         Destroy(gameObject);
+        Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+        gameController.UpdateScore(pointValue);
     }
+
     private void DestroyTime()
     {
         Destroy(gameObject);
         Debug.Log("Destroyed");
+        if (!gameObject.CompareTag("Bad"))
+        {
+            gameController.GameOver();
+                };
     }
 }
