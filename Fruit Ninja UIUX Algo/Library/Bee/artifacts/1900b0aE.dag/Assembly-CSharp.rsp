@@ -356,6 +356,7 @@
 "Assets/Scripts/Controller.cs"
 "Assets/Scripts/DifficultyButton.cs"
 "Assets/Scripts/Target.cs"
+"Assets/Scripts/Trail.cs"
 -langversion:9.0
 
 /deterministic
