@@ -52,7 +52,7 @@ public class Target : MonoBehaviour
         return new Vector3(Random.Range(-maxSpawnX, maxSpawnX),PointSpawnY);
     }
 
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
         if (gameController.isGameActive)
         {
@@ -68,7 +68,7 @@ public class Target : MonoBehaviour
         Debug.Log("Destroyed");
         if (!gameObject.CompareTag("Bad"))
         {
-            gameController.GameOver();
-                };
+            gameController.GameOver();           
+        }
     }
 }

@@ -17,6 +17,10 @@ public class Controller : MonoBehaviour
     public bool isGameActive;
     public GameObject titleScreen;
     public int difficulty;
+    public AudioSource musique;
+    public AudioSource gameOverAudio;
+
+    public float GameSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,27 +46,41 @@ public class Controller : MonoBehaviour
     public void UpdateScore(int ScoreToAdd)
     {
         score += ScoreToAdd;
-        scoreText.text = "Score : " + score;
+        scoreText.text = "Social credit : " + score;
     }
 
     public void GameOver()
     {
+        
+        musique.Pause();
+        
+        if(isGameActive)
+        {
+            gameOverAudio.Play();
+        }
         gameOverText.gameObject.SetActive(true);
         isGameActive = false;
     }
 
     public void RestartGame()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void StartGame(int difficulty)
     {
+        InvokeRepeating("ChangeSpeed", 15,15);
         isGameActive = true;
         spawnRate = spawnRate / difficulty + 0.5f;
         StartCoroutine(SpawnTarget());
         score = 0;
         UpdateScore(0);
         titleScreen.SetActive(false);
+    }
+
+    private void ChangeSpeed()
+    {
+        Time.timeScale += GameSpeed;
     }
 }
